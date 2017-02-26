@@ -8,7 +8,8 @@ $ vagrant ssh u1401
 $ get -c https://repo.continuum.io/archive/Anaconda2-4.3.0-Linux-x86_64.sh && bash Anaconda2-4.3.0-Linux-x86_64.sh
 $ which python
 /home/vagrant/anaconda2/bin/python
-$ conda install django
+$ conda install django pyserial
+$ pip install apscheduler
 $ sudo apt-get install -y git
 $ cd /vagrant
 $ git clone git@github.com:python279/pyairmonitor.git

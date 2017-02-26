@@ -1,9 +1,11 @@
+import time
+import pytz
 from serial import *
 from BaseAirMonitor import BaseAirMonitor
 
 
 class PMS5003T(BaseAirMonitor):
-    def __init__(self, serial_device="/dev/tty.SLAB_USBtoUART", baudrate=9600, bytesize=EIGHTBITS, parity=PARITY_NONE, stopbits=STOPBITS_ONE, timeout=1):
+    def __init__(self, serial_device='/dev/tty.SLAB_USBtoUART', baudrate=9600, bytesize=EIGHTBITS, parity=PARITY_NONE, stopbits=STOPBITS_ONE, timeout=1):
         BaseAirMonitor.__init__(self, serial_device, baudrate, bytesize, parity, stopbits, timeout)
 
     def get_data(self):
@@ -23,8 +25,16 @@ class PMS5003T(BaseAirMonitor):
         }
         return sample_readable
 
+
 if __name__ == '__main__':
+    timezone = pytz.timezone('Asia/Shanghai')
+
+    def every_minute(self):
+        t = int(time.time())
+        data = self.get_data()
+        print t, data
+
+    sensor = PMS5003T()
+    sensor.every_minute_job(every_minute)
     while True:
-        pms5003t = PMS5003T()
-        print pms5003t.get_data()
-        time.sleep(1)
+        time.sleep(10)
