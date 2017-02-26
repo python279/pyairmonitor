@@ -9,13 +9,19 @@ $ get -c https://repo.continuum.io/archive/Anaconda2-4.3.0-Linux-x86_64.sh && ba
 $ which python
 /home/vagrant/anaconda2/bin/python
 $ conda install django
-$ sudo apt-get install mysql-server
+$ sudo apt-get install -y git
+$ cd /vagrant
+$ git clone git@github.com:python279/pyairmonitor.git
+$ sudo apt-get install -y mysql-server
 $ mysql -u root -p
 mysql> CREATE DATABASE pyairmonitor;
 mysql> CREATE USER 'pyairmonitor'@'%' IDENTIFIED BY 'pyairmonitor';
 mysql> GRANT ALL ON pyairmonitor.* TO 'pyairmonitor'@'%';
 mysql> FLUSH PRIVILEGES;
-mysql> exit;
-$
+mysql> USE pyairmonitor;
+mysql> SOURCE pyairmonitor/database/pyairmonitor.sql;
+mysql> EXIT;
+$ cd pyairmonitor/server
+$ python manage.py runserver 0.0.0.0:8080
 ```
 
