@@ -1,5 +1,8 @@
+# -*- coding: utf-8 -*-
+#
+# lhq@python279.org
+
 import pytz
-from serial import *
 from apscheduler.schedulers.background import BackgroundScheduler
 from apscheduler.executors.pool import ThreadPoolExecutor, ProcessPoolExecutor
 
@@ -14,21 +17,13 @@ job_defaults = {
 
 
 class BaseAirMonitor(BackgroundScheduler):
-    def __init__(self, serial_device='/dev/tty.usbserial', baudrate=9600, bytesize=EIGHTBITS, parity=PARITY_NONE, stopbits=STOPBITS_ONE, timeout=1):
+    def __init__(self):
         BackgroundScheduler.__init__(self)
-        self.serial_device = serial_device
-        self.baudrate = baudrate
-        self.bytesize = bytesize
-        self.parity = parity
-        self.stopbits = stopbits
-        self.timeout = timeout
-        self.sensor_inst = Serial(self.serial_device, self.baudrate, self.bytesize, self.parity, self.stopbits, self.timeout)
         self.configure(executors=executors, job_defaults=job_defaults, timezone=pytz.timezone('Asia/Shanghai'))
         self.start()
 
     def __del__(self):
         self.shutdown()
-        self.sensor_inst.close()
 
     # subclass should override this function
     def get_data(self):
