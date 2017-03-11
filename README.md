@@ -22,7 +22,18 @@ mysql> FLUSH PRIVILEGES;
 mysql> USE pyairmonitor;
 mysql> SOURCE pyairmonitor/database/pyairmonitor.sql;
 mysql> EXIT;
+
+# run server
 $ cd pyairmonitor/server
 $ python manage.py runserver 0.0.0.0:8080
+
+# run client as a simulator
+$ cd pyairmonitor/client
+$ python Client.py -s
+
+# run client as the real sensor PMS5003T
+$ cd pyairmonitor/client
+$ python Client.py
+
 ```
 

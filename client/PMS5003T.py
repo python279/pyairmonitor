@@ -4,6 +4,8 @@
 
 import pytz
 from serial import *
+import time
+from datetime import datetime
 from BaseAirMonitor import BaseAirMonitor
 
 
@@ -14,7 +16,7 @@ class PMS5003T(BaseAirMonitor):
         self.bytesize = bytesize
         self.parity = parity
         self.stopbits = stopbits
-        self.sensor_inst = Serial(self.serial_device, self.baudrate, self.bytesize, self.parity, self.stopbits, self.timeout)
+        self.sensor_inst = Serial(self.serial_device, self.baudrate, self.bytesize, self.parity, self.stopbits)
         BaseAirMonitor.__init__(self)
 
     def __del__(self):
@@ -30,6 +32,7 @@ class PMS5003T(BaseAirMonitor):
         sample = bytearray(self.sensor_inst.read(length[1]))
         sample_hex = [int(i) for i in sample]
         sample_readable = {
+            'time': datetime.now().strftime("%Y%m%d%H%M"),
             'pm1': sample_hex[6]*256+sample_hex[7],
             'pm2.5': sample_hex[8]*256+sample_hex[9],
             'pm10': sample_hex[10]*256+sample_hex[11],
@@ -40,13 +43,11 @@ class PMS5003T(BaseAirMonitor):
 
 
 if __name__ == '__main__':
-    import time
     timezone = pytz.timezone('Asia/Shanghai')
 
     def every_minute(self):
-        t = int(time.time())
         data = self.get_data()
-        print t, data
+        print data
 
     sensor = PMS5003T()
     sensor.every_minute_job(every_minute)
