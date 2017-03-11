@@ -4,6 +4,8 @@
 
 import sys
 import pytz
+import time
+from datetime import datetime
 import logging
 import logging.handlers
 from optparse import OptionParser
@@ -14,7 +16,6 @@ from Simulator import Simulator
 if __name__ == '__main__':
     reload(sys)
     sys.setdefaultencoding("utf-8")
-    import time
     timezone = pytz.timezone('Asia/Shanghai')
     logging.basicConfig(level=logging.INFO, format="%(message)s")
     #console = logging.StreamHandler(sys.stdout)
@@ -33,7 +34,9 @@ if __name__ == '__main__':
 
     hour_data = []
 
-    def every_minute(self):
+    def sensor_data_process(self):
+        # every minute job, get sensor data and append to hour_data
+        # upload the hour_data to server every hour
         global hour_data
         data = self.get_data()
         hour_data.append(data)
@@ -50,11 +53,18 @@ if __name__ == '__main__':
                 f.write(csv)
             hour_data = []
 
+    def remote_command_process(self):
+        # every minute job, retrieve command from server
+        logging.info("\nnow %s retrieve command from server" % datetime.now().strftime("%Y%m%d%H%M"))
+        pass
+
     if options.simulator:
         sensor = Simulator()
     else:
         sensor = PMS5003T()
-    sensor.every_minute_job(every_minute)
+
+    sensor.every_minute_job(sensor_data_process)
+    sensor.every_minute_job(remote_command_process)
 
     while True:
         time.sleep(10)

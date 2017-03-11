@@ -3,6 +3,7 @@
 # lhq@python279.org
 
 import pytz
+import time
 from apscheduler.schedulers.background import BackgroundScheduler
 from apscheduler.executors.pool import ThreadPoolExecutor, ProcessPoolExecutor
 
@@ -30,14 +31,14 @@ class BaseAirMonitor(BackgroundScheduler):
         pass
 
     def every_minute_job(self, callback_fun=None):
-        def __every_minite_job(self):
+        def __every_minute_job(self):
             callback_fun(self)
-        self.add_job(__every_minite_job, trigger='cron', args=(self,), id='every_minute_job', minute='*')
+        self.add_job(__every_minute_job, trigger='cron', args=(self,), id='every_minute_job_'+str(time.time()), minute='*')
 
     def every_hour_job(self, callback_fun=None):
-        def __every_minite_job(self):
+        def __every_hour_job(self):
             callback_fun(self)
-        self.add_job(__every_minite_job, trigger='cron', args=(self,), id='every_hour_job', hour='*')
+        self.add_job(__every_hour_job, trigger='cron', args=(self,), id='every_hour_job_'+str(time.time()), hour='*')
 
 
 if __name__ == '__main__':
