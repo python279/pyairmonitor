@@ -40,11 +40,11 @@ if __name__ == '__main__':
         global hour_data
         data = self.get_data()
         hour_data.append(data)
-        logging.info("\nnow %s got minute data, append to hour data" % data['time'])
+        logging.info("\nnow %s got minute data, append to hour data" % datetime.now().strftime("%Y%m%d%H%M%S"))
         logging.info(repr(data))
         if data['time'][-2:] == '59' and len(hour_data):
             # TODO: transfer hour_data to server every hour
-            logging.info("\nnow %s upload hour data to server" % data['time'])
+            logging.info("\nnow %s upload hour data to server" % datetime.now().strftime("%Y%m%d%H%M%S"))
             logging.info(repr(hour_data))
             with open("data.csv", "a") as f:
                 csv = ""
@@ -55,8 +55,16 @@ if __name__ == '__main__':
 
     def remote_command_process(self):
         # every minute job, retrieve command from server
-        logging.info("\nnow %s retrieve command from server" % datetime.now().strftime("%Y%m%d%H%M"))
+        # TODO:
+        logging.info("\nnow %s retrieve command from server" % datetime.now().strftime("%Y%m%d%H%M%S"))
         pass
+
+    def firmware_upgrade_process(self):
+        # every hour job, firmware upgrade from server
+        # TODO:
+        logging.info("\nnow %s firmware upgrade from server" % datetime.now().strftime("%Y%m%d%H%M%S"))
+        pass
+
 
     if options.simulator:
         sensor = Simulator()
@@ -65,6 +73,7 @@ if __name__ == '__main__':
 
     sensor.every_minute_job(sensor_data_process)
     sensor.every_minute_job(remote_command_process)
+    sensor.every_hour_job(firmware_upgrade_process)
 
     while True:
         time.sleep(10)
