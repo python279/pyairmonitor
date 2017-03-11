@@ -42,7 +42,7 @@ if __name__ == '__main__':
         hour_data.append(data)
         logging.info("\nnow %s got minute data, append to hour data" % datetime.now().strftime("%Y%m%d%H%M%S"))
         logging.info(repr(data))
-        if data['time'][-2:] == '59' and len(hour_data):
+        if datetime.now().strftime("%M") == '59' and len(hour_data):
             # TODO: transfer hour_data to server every hour
             logging.info("\nnow %s upload hour data to server" % datetime.now().strftime("%Y%m%d%H%M%S"))
             logging.info(repr(hour_data))
