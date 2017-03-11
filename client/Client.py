@@ -39,12 +39,15 @@ if __name__ == '__main__':
         hour_data.append(data)
         logging.info("\nnow %s got minute data, append to hour data" % data['time'])
         logging.info(repr(data))
-        if data['time'][-2:] == '00' and len(hour_data):
+        if data['time'][-2:] == '59' and len(hour_data):
             # TODO: transfer hour_data to server every hour
             logging.info("\nnow %s upload hour data to server" % data['time'])
             logging.info(repr(hour_data))
             with open("data.csv", "a") as f:
-                f.write("%s:%d:%d:%d:%d:%d\n" % (data['time'], data['temperature'], data['humidity'], data['pm2.5'], data['pm10'], data['pm1']))
+                csv = ""
+                for d in hour_data:
+                    csv += "%s:%d:%d:%d:%d:%d\n" % (d['time'], d['temperature'], d['humidity'], d['pm2.5'], d['pm10'], d['pm1'])
+                f.write(csv)
             hour_data = []
 
     if options.simulator:
