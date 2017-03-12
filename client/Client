@@ -1,0 +1,13 @@
+#!/bin/bash
+
+cd `dirname $0`; pwd 
+while true; do
+  pid=$(pidof python Client.py)
+  if [ -z $pid ]; then
+    python Client.py
+    sleep 5
+  else
+    echo "pyairmonitor is running as pid $pid"
+  fi
+  sleep 5
+done
