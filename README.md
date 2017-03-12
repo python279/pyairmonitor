@@ -12,7 +12,7 @@ $ conda install django pyserial
 $ pip install apscheduler
 $ sudo apt-get install -y git
 $ cd /vagrant
-$ git clone git@github.com:python279/pyairmonitor.git
+$ mkdir src; cd src; git clone https://github.com/python279/pyairmonitor.git
 $ sudo apt-get install -y mysql-server
 $ mysql -u root -p
 mysql> CREATE DATABASE pyairmonitor;
@@ -23,7 +23,7 @@ mysql> USE pyairmonitor;
 mysql> SOURCE pyairmonitor/database/pyairmonitor.sql;
 mysql> EXIT;
 
-$ cd pyairmonitor/server
+$ cd src/pyairmonitor/server
 $ python manage.py runserver 0.0.0.0:8080 &
 ```
 
@@ -49,9 +49,7 @@ $ pip install virtualenv
 $ virtualenv pyairmonitor
 $ source pyairmonitor/bin/activate
 $ pip install apscheduler pyserial
-$ ssh-keygen -t rsa -C "my raspberry pi"
-$ cat .ssh/id_rsa.pub
-$ mkdir src; cd src; git clone git@github.com:python279/pyairmonitor.git
+$ mkdir src; cd src; git clone https://github.com/python279/pyairmonitor.git
 $ cd src/pyairmonitor
 $ python Client.py
 ```
