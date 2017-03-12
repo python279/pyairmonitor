@@ -1,6 +1,7 @@
 - setup a local developing environment with hadoop-vagrant
--- follow the guide to install the prerequisites (https://github.com/python279/hadoop-vagrant)
--- startup one ubuntu14.4 vm
+
+follow the guide to install the prerequisites (https://github.com/python279/hadoop-vagrant)
+
 ```
 $ cd ubuntu14.4
 $ vagrant up u1401
@@ -25,6 +26,9 @@ mysql> EXIT;
 
 $ cd src/pyairmonitor/server
 $ python manage.py runserver 0.0.0.0:8080 &
+
+$ cd src/pyairmonitor/client
+$ python Client.py -s
 ```
 
 -- run client as a simulator on your laptop
