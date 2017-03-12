@@ -69,7 +69,7 @@ if __name__ == '__main__':
         for f in filelist:
             fullpath = os.path.join(client["datahouse"], f)
             if os.path.isfile(fullpath) and fullpath.endswith(".csv") and os.path.getsize(fullpath):
-                logging.info("\nnow %s upload hour data %s to server" % (fullpath, datetime.now().strftime("%Y%m%d%H%M%S")))
+                logging.info("\nnow %s upload hour data %s to server" % (datetime.now().strftime("%Y%m%d%H%M%S"), fullpath))
                 with open(fullpath, "r") as fd:
                     try:
                         HttpRequest(client["server"]).post({'data': fd.read()})
