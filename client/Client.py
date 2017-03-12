@@ -2,6 +2,7 @@
 #
 # lhq@python279.org
 
+import os
 import sys
 import pytz
 import time
@@ -10,6 +11,8 @@ from datetime import datetime
 import logging
 import logging.handlers
 from optparse import OptionParser
+from error import trace_msg
+from httpRequest import HttpRequest
 from PMS5003T import PMS5003T
 from Simulator import Simulator
 
@@ -37,7 +40,10 @@ if __name__ == '__main__':
     config.readfp(open("Client.cfg"))
     serial = config.get("Client", "serial")
     server = config.get("Client", "server")
-    logging.info("read config from Client.cfg: serial=%s, server=%s" % (serial, server))
+    datahouse = config.get("Client", "datahouse")
+    logging.info("read config from Client.cfg: serial=%s, server=%s, datahouse=%s" % (serial, server, datahouse))
+
+    os.mkdir(datahouse) if not os.path.exists(datahouse) else True
 
     hour_data = []
 
@@ -50,15 +56,32 @@ if __name__ == '__main__':
         logging.info("\nnow %s got minute data, append to hour data" % datetime.now().strftime("%Y%m%d%H%M%S"))
         logging.info(repr(data))
         if datetime.now().strftime("%M") == '59' and len(hour_data):
-            # TODO: transfer hour_data to server every hour
+            # flush hour_data to local fs every hour
+            filename = os.path.join(datahouse, "data-%s.csv" % datetime.now().strftime("%Y%m%d%H"))
             logging.info("\nnow %s upload hour data to server" % datetime.now().strftime("%Y%m%d%H%M%S"))
             logging.info(repr(hour_data))
-            with open("data.csv", "a") as f:
+            with open(filename, "w") as f:
                 csv = ""
                 for d in hour_data:
-                    csv += "%s:%d:%d:%d:%d:%d\n" % (d['time'], d['temperature'], d['humidity'], d['pm2.5'], d['pm10'], d['pm1'])
+                    csv += "%s:%d:%d:%d:%d:%d\n" % (d['timestamp'], d['temperature'], d['humidity'], d['pm2.5'], d['pm10'], d['pm1'])
                 f.write(csv)
             hour_data = []
+
+    def upload_data_process(self):
+        # every hour job, upload the hour_data to server every hour
+        logging.info("\nnow %s upload hour data to server" % datetime.now().strftime("%Y%m%d%H%M%S"))
+        filelist = os.listdir(datahouse)
+        for f in filelist:
+            fullpath = os.path.join(datahouse, f)
+            if os.path.isfile(fullpath) and fullpath.endswith(".csv") and os.path.getsize(fullpath):
+                logging.info("\nnow %s upload hour data %s to server" % (fullpath, datetime.now().strftime("%Y%m%d%H%M%S")))
+                with open(fullpath, "r") as fd:
+                    try:
+                        HttpRequest(server).post({'data': fd.read()})
+                        fd.close()
+                        os.remove(fullpath)
+                    except:
+                        logging.error(trace_msg())
 
     def remote_command_process(self):
         # every minute job, retrieve command from server
@@ -79,6 +102,7 @@ if __name__ == '__main__':
         sensor = PMS5003T(serial_device=serial)
 
     sensor.every_minute_job(sensor_data_process)
+    sensor.every_hour_job(upload_data_process)
     sensor.every_minute_job(remote_command_process)
     sensor.every_hour_job(firmware_upgrade_process)
 

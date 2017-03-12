@@ -33,12 +33,12 @@ class BaseAirMonitor(BackgroundScheduler):
     def every_minute_job(self, callback_fun=None):
         def __every_minute_job(self):
             callback_fun(self)
-        self.add_job(__every_minute_job, trigger='cron', args=(self,), id='every_minute_job_'+str(time.time()), minute='*')
+        self.add_job(__every_minute_job, trigger='cron', args=(self,), id='every_minute_job_'+str(id(__every_minute_job)), minute='*')
 
     def every_hour_job(self, callback_fun=None):
         def __every_hour_job(self):
             callback_fun(self)
-        self.add_job(__every_hour_job, trigger='cron', args=(self,), id='every_hour_job_'+str(time.time()), hour='*')
+        self.add_job(__every_hour_job, trigger='cron', args=(self,), id='every_hour_job_'+str(id(__every_hour_job)), hour='*')
 
 
 if __name__ == '__main__':

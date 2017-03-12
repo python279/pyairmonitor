@@ -32,7 +32,7 @@ class PMS5003T(BaseAirMonitor):
         sample = bytearray(self.sensor_inst.read(length[1]))
         sample_hex = [int(i) for i in sample]
         sample_readable = {
-            'time': datetime.now().strftime("%Y%m%d%H%M%S"),
+            'timestamp': datetime.now().strftime("%Y%m%d%H%M%S"),
             'pm1': sample_hex[6]*256+sample_hex[7],
             'pm2.5': sample_hex[8]*256+sample_hex[9],
             'pm10': sample_hex[10]*256+sample_hex[11],
