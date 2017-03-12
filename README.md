@@ -49,9 +49,6 @@ $ python Client.py
 ```
 $ ssh pi@raspberry_ip
 $ sudo su -
-$ pip install virtualenv
-$ virtualenv pyairmonitor
-$ source pyairmonitor/bin/activate
 $ pip install apscheduler pyserial
 $ mkdir src; cd src; git clone https://github.com/python279/pyairmonitor.git
 $ cd src/pyairmonitor
