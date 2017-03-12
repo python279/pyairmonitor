@@ -10,7 +10,7 @@ $ get -c https://repo.continuum.io/archive/Anaconda2-4.3.0-Linux-x86_64.sh && ba
 $ which python
 /home/vagrant/anaconda2/bin/python
 $ conda install django pyserial
-$ pip install apscheduler
+$ pip install apscheduler retry
 $ sudo apt-get install -y git
 $ cd /vagrant
 $ mkdir src; cd src; git clone https://github.com/python279/pyairmonitor.git
@@ -33,14 +33,14 @@ $ python Client.py -s
 
 -- run client as a simulator on your laptop
 ```
-$ pip install apscheduler pyserial
+$ pip install apscheduler pyserial retry
 $ cd pyairmonitor/client
 $ python Client.py -s
 ```
 
 -- run client as the real sensor PMS5003T on your laptop
 ```
-$ pip install apscheduler pyserial
+$ pip install apscheduler pyserial retry
 $ cd pyairmonitor/client
 $ python Client.py
 ```
@@ -49,7 +49,7 @@ $ python Client.py
 ```
 $ ssh pi@raspberry_ip
 $ sudo su -
-$ pip install apscheduler pyserial
+$ pip install apscheduler pyserial retry
 $ mkdir src; cd src; git clone https://github.com/python279/pyairmonitor.git
 $ cd src/pyairmonitor
 $ python Client.py
