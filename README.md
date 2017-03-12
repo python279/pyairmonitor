@@ -25,6 +25,7 @@ mysql> EXIT;
 
 $ cd pyairmonitor/server
 $ python manage.py runserver 0.0.0.0:8080 &
+```
 
 -- run client as a simulator on your laptop
 ```
