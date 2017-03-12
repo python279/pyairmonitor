@@ -5,6 +5,7 @@
 import sys
 import pytz
 import time
+import ConfigParser
 from datetime import datetime
 import logging
 import logging.handlers
@@ -31,6 +32,12 @@ if __name__ == '__main__':
     parser = OptionParser()
     parser.add_option("-s", "--simulator", action="store_true", dest="simulator", default=False, help="simulator")
     options, args = parser.parse_args()
+
+    config = ConfigParser.SafeConfigParser()
+    config.readfp(open("Client.cfg"))
+    serial = config.get("Client", "serial")
+    server = config.get("Client", "server")
+    logging.info("read config from Client.cfg: serial=%s, server=%s" % (serial, server))
 
     hour_data = []
 
@@ -69,7 +76,7 @@ if __name__ == '__main__':
     if options.simulator:
         sensor = Simulator()
     else:
-        sensor = PMS5003T()
+        sensor = PMS5003T(serial_device=serial)
 
     sensor.every_minute_job(sensor_data_process)
     sensor.every_minute_job(remote_command_process)
