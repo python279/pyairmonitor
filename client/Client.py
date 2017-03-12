@@ -94,7 +94,16 @@ if __name__ == '__main__':
     if options.simulator:
         sensor = Simulator()
     else:
-        sensor = PMS5003T(serial_device=client["serial"])
+        serial = client["serial"].split(",")
+        for s in serial:
+            try:
+                sensor = PMS5003T(serial_device=s)
+                break
+            except:
+                sensor = None
+                logging.error(trace_msg())
+
+    exit(255) if sensor is None else True
 
     sensor.every_minute_job(sensor_data_process)
     sensor.every_hour_job(upload_data_process)
