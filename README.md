@@ -49,9 +49,17 @@ $ python Client.py
 ```
 $ ssh pi@raspberry_ip
 $ sudo su -
-$ pip install apscheduler pyserial retry
-$ mkdir src; cd src; git clone https://github.com/python279/pyairmonitor.git
-$ cd src/pyairmonitor
-$ python Client.py
+# pip install apscheduler pyserial retry
+# mkdir src; cd src; git clone https://github.com/python279/pyairmonitor.git
+# cd src/pyairmonitor
+# python Client.py
 ```
 
+- Write the raspberry box image for pyarimonitor to tf card
+
+Down the image from https://pan.baidu.com/s/1qX9tbD6 and then
+
+```
+$ sudo su -
+# bzip2 -d -c | cat > /dev/sdx
+```
