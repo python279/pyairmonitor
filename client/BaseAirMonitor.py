@@ -3,7 +3,6 @@
 # lhq@python279.org
 
 import pytz
-import time
 from apscheduler.schedulers.background import BackgroundScheduler
 from apscheduler.executors.pool import ThreadPoolExecutor, ProcessPoolExecutor
 

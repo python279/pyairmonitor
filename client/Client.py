@@ -51,7 +51,7 @@ if __name__ == '__main__':
         logging.info(repr(data))
         if datetime.now().strftime("%M") == '59' and len(hour_data):
             # flush hour_data to local fs every hour
-            filename = os.path.join(client["datahouse"], "data-%s.csv" % datetime.now().strftime("%Y%m%d%H"))
+            filename = os.path.join(client["datahouse"], "%s.csv" % datetime.now().strftime("%Y%m%d%H"))
             logging.info("\nnow %s upload hour data to server" % datetime.now().strftime("%Y%m%d%H%M%S"))
             logging.info(repr(hour_data))
             with open(filename, "w") as f:
@@ -70,8 +70,10 @@ if __name__ == '__main__':
             fullpath = os.path.join(client["datahouse"], f)
             if os.path.isfile(fullpath) and fullpath.endswith(".csv") and os.path.getsize(fullpath):
                 logging.info("\nnow %s upload hour data %s to server" % (datetime.now().strftime("%Y%m%d%H%M%S"), fullpath))
+                timestamp = f.split('.')[0]
                 with open(fullpath, "r") as fd:
                     try:
+
                         HttpRequest(client["server"]).post({'data': fd.read()})
                         fd.close()
                         os.remove(fullpath)

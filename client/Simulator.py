@@ -20,7 +20,7 @@ class Simulator(BaseAirMonitor):
         random.seed(time.time())
         sample_readable = {
             'timestamp': datetime.now().strftime("%Y%m%d%H%M%S"),
-            'pm1': random.randint(30, 100),
+            'pm1.0': random.randint(30, 100),
             'pm2.5': random.randint(30, 100),
             'pm10': random.randint(30, 100),
             'temperature': random.randint(1, 50),
