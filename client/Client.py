@@ -57,7 +57,7 @@ if __name__ == '__main__':
             with open(filename, "w") as f:
                 csv = ""
                 for d in hour_data:
-                    csv += "%s:%d:%d:%d:%d:%d\n" % (d['timestamp'], d['temperature'], d['humidity'], d['pm2.5'], d['pm10'], d['pm1'])
+                    csv += "%s:%d:%d:%d:%d:%d\n" % (d['timestamp'], d['temperature'], d['humidity'], d['pm2.5'], d['pm10'], d['pm1.0'])
                 f.write(csv)
             hour_data = []
 
