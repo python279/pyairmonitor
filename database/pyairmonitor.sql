@@ -25,12 +25,12 @@ DROP TABLE IF EXISTS `airdata`;
 CREATE TABLE `airdata` (
   `id` bigint(64) unsigned NOT NULL AUTO_INCREMENT,
   `u_d` bigint(64) unsigned NOT NULL COMMENT 'user_id << 32 + device_id',
-  `date` date NOT NULL,
+  `timestamp` char(10) NOT NULL,
   `data` text NOT NULL COMMENT 'air data for whole hour, raw text format, one line for each minute',
   PRIMARY KEY (`id`),
   KEY `u_d` (`u_d`) USING BTREE,
-  KEY `date` (`date`) USING BTREE,
-  KEY `u_d_date` (`u_d`,`date`)
+  KEY `timestamp` (`timestamp`) USING BTREE,
+  KEY `u_d_timestamp` (`u_d`,`timestamp`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 

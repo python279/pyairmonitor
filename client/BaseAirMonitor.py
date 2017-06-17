@@ -29,6 +29,11 @@ class BaseAirMonitor(BackgroundScheduler):
     def get_data(self):
         pass
 
+    def every_10second_job(self, callback_fun=None):
+        def __every_10second_job(self):
+            callback_fun(self)
+        self.add_job(__every_10second_job, trigger='cron', args=(self,), id='every_10second_job_'+str(id(__every_10second_job)), second='*/6')
+
     def every_minute_job(self, callback_fun=None):
         def __every_minute_job(self):
             callback_fun(self)

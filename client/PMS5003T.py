@@ -62,6 +62,8 @@ class PMS5003T(BaseAirMonitor):
                 'pm10': sample_hex[10]*256+sample_hex[11],
                 'temperature': (sample_hex[20]*256+sample_hex[21])/10,
                 'humidity': (sample_hex[22]*256+sample_hex[23])/10,
+                'switch1': 0,
+                'switch2': 1,
             }
             if self.__invalid_sample_value(sample_readable):
                 continue
