@@ -5,7 +5,6 @@
 import pytz
 import random
 import time
-from datetime import datetime
 from BaseAirMonitor import BaseAirMonitor
 
 
@@ -19,7 +18,7 @@ class Simulator(BaseAirMonitor):
     def get_data(self):
         random.seed(time.time())
         sample_readable = {
-            'timestamp': datetime.now().strftime("%Y%m%d%H%M%S"),
+            'timestamp': int(time.time()),
             'pm1.0': random.randint(30, 100),
             'pm2.5': random.randint(30, 100),
             'pm10': random.randint(30, 100),

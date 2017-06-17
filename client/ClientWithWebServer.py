@@ -43,7 +43,7 @@ if __name__ == '__main__':
             data_queue.get(False)
         data_queue.put(data, False)
         with open(os.path.join(client['datahouse'], 'data.csv'), 'w') as f:
-            f.write("%s:%d:%d:%d:%d:%d:%d:%d\n" % (data['timestamp'], data['temperature'], data['humidity'], data['pm2.5'], data['pm10'], data['pm1.0'], data['switch1'], data['switch2']))
+            f.write("%d:%d:%d:%d:%d:%d:%d:%d\n" % (data['timestamp'], data['temperature'], data['humidity'], data['pm2.5'], data['pm10'], data['pm1.0'], data['switch1'], data['switch2']))
         logging.info('\nnow %s got 10second data, append to data queue' % datetime.now().strftime('%Y%m%d%H%M%S'))
         logging.info(repr(data))
 

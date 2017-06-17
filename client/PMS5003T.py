@@ -3,10 +3,8 @@
 # lhq@python279.org
 
 import pytz
-import logging
 from serial import *
 import time
-from datetime import datetime
 from BaseAirMonitor import BaseAirMonitor
 
 
@@ -56,7 +54,7 @@ class PMS5003T(BaseAirMonitor):
             if checksum != sample_hex[-2]*256+sample_hex[-1]:
                 continue
             sample_readable = {
-                'timestamp': datetime.now().strftime('%Y%m%d%H%M%S'),
+                'timestamp': int(time.time()),
                 'pm1.0': sample_hex[6]*256+sample_hex[7],
                 'pm2.5': sample_hex[8]*256+sample_hex[9],
                 'pm10': sample_hex[10]*256+sample_hex[11],
