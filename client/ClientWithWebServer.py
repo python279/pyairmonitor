@@ -14,7 +14,7 @@ from PMS5003T import PMS5003T
 import Queue
 import web
 import json
-import Switch
+import Switch.Switch as Switch
 
 
 if __name__ == '__main__':
