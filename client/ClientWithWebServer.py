@@ -78,8 +78,8 @@ if __name__ == '__main__':
 
         def POST(self):
             post_data = web.input()
-            print post_data['switch1']
-            if post_data['switch1']:
+            logging.info("switch1=%s" % post_data['switch1'])
+            if int(post_data['switch1']):
                 switch.on()
             else:
                 switch.off()
