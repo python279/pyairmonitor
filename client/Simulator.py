@@ -24,8 +24,6 @@ class Simulator(BaseAirMonitor):
             'pm10': random.randint(30, 100),
             'temperature': random.randint(1, 50),
             'humidity': random.randint(10, 90),
-            'switch1': 0,
-            'switch2': 0,
         }
         return sample_readable
 

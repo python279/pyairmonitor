@@ -14,6 +14,7 @@ from PMS5003T import PMS5003T
 import Queue
 import web
 import json
+import Switch
 
 
 if __name__ == '__main__':
@@ -35,6 +36,8 @@ if __name__ == '__main__':
 
     data_queue = Queue.Queue(1000)
 
+    switch = Switch()
+
     def sensor_data_process2(self):
         # every 10second job, get sensor data and append to a queue
         global data_queue
@@ -43,7 +46,7 @@ if __name__ == '__main__':
             data_queue.get(False)
         data_queue.put(data, False)
         with open(os.path.join(client['datahouse'], 'data.csv'), 'a') as f:
-            f.write("%d:%d:%d:%d:%d:%d:%d:%d\n" % (data['timestamp'], data['temperature'], data['humidity'], data['pm2.5'], data['pm10'], data['pm1.0'], data['switch1'], data['switch2']))
+            f.write("%d:%d:%d:%d:%d:%d:%d\n" % (data['timestamp'], data['temperature'], data['humidity'], data['pm2.5'], data['pm10'], data['pm1.0'], switch.state()))
         logging.info('\nnow %s got 10second data, append to data queue' % datetime.now().strftime('%Y%m%d%H%M%S'))
         logging.info(repr(data))
 
@@ -76,8 +79,10 @@ if __name__ == '__main__':
         def POST(self):
             post_data = web.input()
             print post_data['switch1']
-            print post_data['switch2']
-            pass
+            if post_data['switch1']:
+                switch.on()
+            else:
+                switch.off()
 
     app.run()
 
