@@ -10,7 +10,7 @@ $ get -c https://repo.continuum.io/archive/Anaconda2-4.3.0-Linux-x86_64.sh && ba
 $ which python
 /home/vagrant/anaconda2/bin/python
 $ conda install django pyserial
-$ pip install apscheduler retry
+$ pip install apscheduler retry web.py
 $ sudo apt-get install -y git
 $ cd /vagrant
 $ mkdir src; cd src; git clone https://github.com/python279/pyairmonitor.git
